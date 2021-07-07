@@ -122,10 +122,42 @@ def inOrderTraverse(tree, array):
         array.append(tree.data)
         inOrderTraverse(tree.right, array)
     return array
-def levelOrderTraverse(tree , array):
-    queue = []
-    
 
+# Time Complexity: O(N)
+# Space Complexity: O(N) + O(h) for stack sp
+def levelHelper(root):
+    array = []
+    levelOrderTraverse(root , array , 0)
+    return array
+def levelOrderTraverse(tree , array,level):
+    if tree is None:
+        return;
+    if len(array)<=level:
+        array.append([])
+
+    array[level].append(tree.data)
+    levelOrderTraverse(tree.left , array , level+1)
+    levelOrderTraverse(tree.right , array , level+1)
+
+# space O(N)  and time O(N)
+def levelOrder(root , array):
+    """
+    use que
+    """
+    from collections import deque
+    q = deque()
+    if root:
+        q.append(root)
+    while len(q):
+        for i in range(len(q)):
+            x = q.popleft()
+            array.append(x.data)
+            if x.left:
+                q.append(x.left)
+            if x.right:
+                q.append(x.right)
+
+    return array
 
 # TEST
 test = (
@@ -149,4 +181,6 @@ test = (
 print("PostOrderTraverse  " ,PostOrderTraverse(test ,[]))
 print("Pre order Transversal  " , PreOrderTraverse(test ,[]))
 print("In order Transversal" , inOrderTraverse(test ,[]))
+print("Level order Transversal" , levelHelper(test))
+print("Level order Transversal using q" , levelOrder(test , []))
 # print([1, 2, 5, 5, 7, 10, 15, 16, 27, 30, 34, 35])
