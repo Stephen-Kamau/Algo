@@ -159,6 +159,22 @@ def levelOrder(root , array):
 
     return array
 
+def LevelUsingList(tree , array):
+    q = []
+    if tree:
+        q.append(tree)
+    while len(q):
+        for i in range(len(q)):
+            array.append(q[0].data)
+
+            if q[0].left:
+                q.append(q[0].left)
+            if q[0].right:
+                q.append(q[0].right)
+            del q[0]
+
+    return array
+
 # TEST
 test = (
     BST(10)
@@ -183,4 +199,5 @@ print("Pre order Transversal  " , PreOrderTraverse(test ,[]))
 print("In order Transversal" , inOrderTraverse(test ,[]))
 print("Level order Transversal" , levelHelper(test))
 print("Level order Transversal using q" , levelOrder(test , []))
+print("Level USing List   " , LevelUsingList(test , []))
 # print([1, 2, 5, 5, 7, 10, 15, 16, 27, 30, 34, 35])
